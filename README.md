@@ -7,7 +7,11 @@ Dropwhale is a drop-in Docker environment aimed at Drupal module developers. Ins
 
 ## Use
 
-Download Dropwhale and copy the .docker directory to the root of your module repository. You can choose to commit the directory to your module repository, or gitignore it. Dropwhale doesn't care.
+1. Download Dropwhale and copy the .docker directory to the root of your module repository. 
+2. You can choose to commit the directory to your module repository, or gitignore it. Dropwhale doesn't care.
+3. Copy .docker/docker-compose.override.yml.dist to .docker/docker-compose.override.yml (no .dist).
+4. Edit docker/docker-compose.override.yml, replace your_module_name with your module machine name.
+5. Run .docker/build.sh.
 
 ## License
 
