@@ -1,0 +1,3 @@
+data:
+   volumes:
+         - ..:/var/www/modules/your_module_name
