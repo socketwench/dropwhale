@@ -2,8 +2,6 @@
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-echo $DIR
-
 PS=$(cd $DIR && docker-compose ps -q)
 
 if [[ $PS == '' ]]; then
