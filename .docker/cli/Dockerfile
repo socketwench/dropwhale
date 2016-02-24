@@ -15,8 +15,11 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer && \
     ln -s /usr/local/bin/composer /usr/bin/composer
 
-RUN composer global require drush/drush:dev-master && \
+RUN composer global require drush/drush && \
     ln -s /root/.composer/vendor/bin/drush /usr/bin/drush
+
+RUN composer global require drupal/console && \
+    ln -s /root/.composer/vendor/bin/drupal /usr/bin/drupal
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
