@@ -18,8 +18,10 @@ RUN mv composer.phar /usr/local/bin/composer && \
 RUN composer global require drush/drush && \
     ln -s /root/.composer/vendor/bin/drush /usr/bin/drush
 
-RUN composer global require drupal/console && \
-    ln -s /root/.composer/vendor/bin/drupal /usr/bin/drupal
+# Manually install Drupal Console due to https://github.com/hechoendrupal/DrupalConsole/issues/2064
+RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
+    chmod +x drupal.phar && \
+    mv drupal.phar /usr/bin/drupal
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
