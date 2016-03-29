@@ -15,8 +15,13 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer && \
     ln -s /usr/local/bin/composer /usr/bin/composer
 
-RUN composer global require drush/drush:dev-master && \
+RUN composer global require drush/drush && \
     ln -s /root/.composer/vendor/bin/drush /usr/bin/drush
+
+# Manually install Drupal Console due to https://github.com/hechoendrupal/DrupalConsole/issues/2064
+RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
+    chmod +x drupal.phar && \
+    mv drupal.phar /usr/bin/drupal
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
