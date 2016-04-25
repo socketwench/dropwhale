@@ -7,13 +7,9 @@ web:
    links:
       - db
 db:
-   build: db
+   image: mariadb
    ports:
       - 3306:3306
-   environment:
-      - MYSQL_DB=drupal8
-      - MYSQL_USER=drupal
-      - MYSQL_PASS=thisisawesome
 cli:
    build: cli
    volumes_from:
@@ -24,4 +20,4 @@ cli:
 data:
    image: tianon/true
    volumes:
-         - /var/www
+      - /var/www/html
