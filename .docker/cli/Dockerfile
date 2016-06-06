@@ -1,22 +1,8 @@
-FROM debian:latest
-MAINTAINER your_email@example.com
+FROM drush/drush
+MAINTAINER tess@deninet.com
 
 RUN apt-get update && \
-    apt-get -yq install git curl \
-                        php5 php5-mysql php5-imagick php5-imap \
-                        php5-mcrypt php5-curl php5-cli php5-gd \
-                        php5-sqlite php5-common php-apc php-pear \
-                        php5-json php5-memcache php5-intl \
-                        mysql-client \
-                        supervisor
-
-RUN curl -sS https://getcomposer.org/installer | php
-
-RUN mv composer.phar /usr/local/bin/composer && \
-    ln -s /usr/local/bin/composer /usr/bin/composer
-
-RUN composer global require drush/drush && \
-    ln -s /root/.composer/vendor/bin/drush /usr/bin/drush
+    apt-get -yq install supervisor
 
 # Manually install Drupal Console due to https://github.com/hechoendrupal/DrupalConsole/issues/2064
 RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
@@ -29,7 +15,11 @@ COPY init.sh /root/scripts/init.sh
 RUN chmod +x /root/scripts/init.sh
 
 COPY rebuild.sh /root/scripts/rebuild.sh
-
 RUN chmod +x /root/scripts/rebuild.sh
 
-CMD ["/usr/bin/supervisord", "-n"]
+COPY phpunit.sh /root/scripts/phpunit.sh
+RUN chmod +x /root/scripts/phpunit.sh
+
+CMD ["-n"]
+
+ENTRYPOINT ["/usr/bin/supervisord"]
