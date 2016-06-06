@@ -25,3 +25,12 @@ If you need to rebuild Drupal at any time, execute .docker/build.sh
 ## License
 
 Dropwhale is licensed under the GPLv3. 
+
+## Changelog
+
+### Version 0.3
+* Switched to more standardized containers to speed build process.
+* PHP 7 with OpCache.
+* Added missing php.ini to web container.
+* Added helper scripts for PHPUnit testing and nuking docker.
+* XDebug Support!
