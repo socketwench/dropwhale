@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
+
+#
+# start.sh
+#
+# Start Dropwhale containers.
+#
+
+# Save the current working directory.
 CWD=$(pwd)
+
+# Get the full path to the directory containing this script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Get the list of containers for this service, if any.
