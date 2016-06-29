@@ -5,6 +5,8 @@ cli:
  environment:
    - DRUPAL_BRANCH=8.2.x
    - MODULE_ENABLE=list_of_modules space_delimited
+   - DRUPAL_USER=admin
+   - DRUPAL_PASSWORD=password
 db:
  environment:
    - MYSQL_ROOT_PASSWORD=root
