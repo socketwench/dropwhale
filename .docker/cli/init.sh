@@ -25,5 +25,6 @@ else
 fi
 
 # Copy files from the repo to the web docroot.
+rm -rf /var/www/html/core *.php
 cp -r /tmp/drupal/* /var/www/html/
 cp /tmp/drupal/.htaccess /var/www/html
