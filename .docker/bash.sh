@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+CWD=$(pwd)
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=$( dirname $SCRIPT_DIR )
 
 PS=$(cd $DIR && docker-compose ps -q)
 
@@ -15,3 +16,6 @@ if [[ $1 == '' ]]; then
 else
 	docker exec -it $(cd $DIR && docker-compose ps -q cli) bash -ic "$*"
 fi
+
+# Return to the cwd.
+cd $CWD

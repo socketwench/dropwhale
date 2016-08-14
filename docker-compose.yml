@@ -1,5 +1,5 @@
 web:
-   build: web
+   image: socketwench/drupal-base:8-xdebug
    ports:
       - "80:80"
    volumes_from:
@@ -11,7 +11,7 @@ db:
    ports:
       - 3306:3306
 cli:
-   build: cli
+   build: .docker/cli
    volumes_from:
       - data
    links:
