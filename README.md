@@ -11,16 +11,41 @@ need to argue with xdebug or get Drush installed. It's all built in!
 
 ## Use
 
-1. Download Dropwhale and copy the .docker directory to the root of your module repository.
+1. Download Dropwhale and copy the `.docker` directory to the root of your module repository.
 2. You can choose to commit the directory to your module repository, or gitignore it. Dropwhale doesn't care.
-3. Reanme docker-compose.override.yml.dist to docker-compose.override.yml (no .dist).
-4. Edit docker-compose.override.yml, replace your_module_name with your module machine name.
-5. Edit the docker-compose-override.yml file, adding the
+3. Copy `.docker/docker-compose.override.yml.dist` to `.docker/docker-compose.override.yml` (no `.dist`).
+4. Edit `.docker/docker-compose.override.yml`, replace `your_module_name` with your module machine name.
+5. Edit the `.docker/docker-compose-override.yml` file, adding the
    installation directory of your module, and adding your module name to
    the MODULE_ENABLE environment variable.
-6. cd to the root of your module repository. Execute .docker/start.sh
+6. cd to the root of your module repository. Execute `.docker/start.sh`
+7. To stop your containers execute `.docker/stop.sh`
 
-If you need to rebuild Drupal at any time, execute .docker/build.sh
+## Readymade scripts
+Repository has some readymade scripts to help you to manage your local environment.
+
+1. If you need to rebuild Drupal at any time, execute  
+`.docker/build.sh`
+
+2. To get a command line in a CLI container, execute  
+`.docker/bash.sh`
+
+3. Kill and delete the containers (but keep Docker images), execute  
+`.docker/delete.sh`  
+This is a faster way to get a clean environment compared to `nuke.sh`
+
+4. To run Drupal Console in the CLI container, execute  
+`.docker/drupal.sh`
+
+5. To run Drush in the CLI container, execute  
+`.docker/drush.sh`
+
+6. To kill **all** containers, delete **all** containers and images, execute  
+`.docker/nuke.sh`  
+**WARNING:** This leaves your entire system squeaky clean, but also deletes all docker resources, not just Dropwhale containers.
+
+7. To run PHPUnit in the cli container, execute  
+`.docker/run-tests.sh`  
 
 ## License
 
