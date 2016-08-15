@@ -9,3 +9,6 @@ RUN chmod +x /root/scripts/rebuild.sh
 
 COPY phpunit.sh /root/scripts/phpunit.sh
 RUN chmod +x /root/scripts/phpunit.sh
+
+COPY run-tests.sh /root/scripts/run-tests.sh
+RUN chmod +x /root/scripts/run-tests.sh
