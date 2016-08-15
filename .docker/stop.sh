@@ -10,7 +10,10 @@
 CWD=$(pwd)
 
 # Get the full path to the directory containing this script.
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Get the directory of the docker-compose.yml
+DIR=$( dirname $SCRIPT_DIR )
 
 echo "Killing containers..."
 
