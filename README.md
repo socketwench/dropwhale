@@ -54,8 +54,14 @@ Dropwhale is licensed under the GPLv3.
 ## Changelog
 
 ### Version 0.4
+* Use DRUPAL_USER and DRUPAL_PASSWORD to set login credientals.
 * Switched to socketwench/drupal-base:8-xdebug and socketwench/drupal-cli.
 * Moved docker-compose.*.yml files into root directory.
+* Removed hardcoded 8.0.x branch pull in init.sh, now pulls from default branch.
+* Added composer install to init.sh.
+* Commented helper scripts for MOAR HACKABILITY.
+* Added run-tests.sh script so you never have to log in.
+* Updated helper scripts to preserve working directory.
 
 ### Version 0.3
 * Switched to more standardized containers to speed build process.
