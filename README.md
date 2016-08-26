@@ -46,11 +46,9 @@ docker resources, not just Dropwhale containers.
 
 7. To run PHPUnit in the cli container, execute  
 `.docker/run-tests.sh`  
-**WARNING:** This leaves your entire system squeaky clean, but also deletes all
-_other_ docker resources, not just Dropwhale containers.
 
-8. To run PHPUnit in the cli container, execute  
-`.docker/run-tests.sh`
+8. To run PHPUnit tests for a single module "mymodule" in the cli container, execute  
+`.docker/run-tests.sh --module mymodule`
 
 ## License
 
