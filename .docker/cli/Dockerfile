@@ -1,6 +1,10 @@
 FROM socketwench/drupal-cli
 MAINTAINER tess@deninet.com
 
+# Install phpcs and Drupal code sniffer
+RUN composer global require drupal/coder && \
+    phpcs --config-set installed_paths /composer/vendor/drupal/coder/coder_sniffer
+
 COPY init.sh /root/scripts/init.sh
 RUN chmod +x /root/scripts/init.sh
 

@@ -11,7 +11,7 @@ db:
    ports:
       - 3306:3306
 cli:
-   build: .docker/cli
+   image: socketwench/dropwhale:cli
    volumes_from:
       - data
    links:
