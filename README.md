@@ -28,6 +28,10 @@ Dropwhale is licensed under the GPLv3.
 
 ## Changelog
 
+### Version 0.5
+* Various fixes
+* Added phpcs.sh script.
+
 ### Version 0.4
 * Use DRUPAL_USER and DRUPAL_PASSWORD to set login credientals.
 * Switched to socketwench/drupal-base:8-xdebug and socketwench/drupal-cli.
