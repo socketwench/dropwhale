@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 #
-# delete.sh
+# drush.sh
 #
-# Kill and delete the containers, does not delete images.
+# Run drush in the cli container.
 #
 
 # Save the current working directory.
@@ -15,12 +15,8 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # Get the directory of the docker-compose.yml
 DIR=$( dirname $SCRIPT_DIR )
 
-echo "Stopping containers..."
-cd $DIR
-docker-compose kill
-
-echo "Deleting containers..."
-docker-compose rm -v
+# Invoke drush in the cli container, passing any user input.
+${SCRIPT_DIR}/bash.sh phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md /var/www/html/modules/
 
 # Return to the cwd.
 cd $CWD

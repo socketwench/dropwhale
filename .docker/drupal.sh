@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 #
-# stop.sh
+# drupal.sh
 #
-# Stop Dropwhale containers, do not delete them.
+# Run Drupal Console in the cli container.
 #
 
-# Save the current directory.
-CWD=$(pwd)
+# Save the current working directory.
+CWD=$( pwd )
 
 # Get the full path to the directory containing this script.
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -15,10 +15,8 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # Get the directory of the docker-compose.yml
 DIR=$( dirname $SCRIPT_DIR )
 
-echo "Killing containers..."
-
-cd $DIR
-docker-compose kill
+# Invoke Drupal Console in the cli container, passing user input.
+${SCRIPT_DIR}/bash.sh drupal --root=/var/www/html --uri=http://web/ "$*"
 
 # Return to the cwd.
 cd $CWD
