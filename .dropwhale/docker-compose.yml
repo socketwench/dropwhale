@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    image: socketwench/dropwhale-web
+    build: web
     ports:
       - "80:80"
     volumes_from:
@@ -9,7 +9,7 @@ services:
     depends_on:
       - php
   php:
-    image: socketwench/dropwhale-php
+    build: php
     volumes_from:
       - data
     environment:
@@ -17,14 +17,14 @@ services:
       - MYSQL_USER=drupal
       - MYSQL_PASSWORD=drupal
   db:
-    image: socketwench/dropwhale-db
-    ports:
+     build: db
+     ports:
       - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=drupal
-      - MYSQL_USER=drupal
-      - MYSQL_PASSWORD=drupal
+     environment:
+       - MYSQL_ROOT_PASSWORD=root
+       - MYSQL_DATABASE=drupal
+       - MYSQL_USER=drupal
+       - MYSQL_PASSWORD=drupal
   data:
     image: tianon/true
     volumes:

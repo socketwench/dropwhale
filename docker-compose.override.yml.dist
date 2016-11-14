@@ -1,3 +1,21 @@
+version: '2'
+services:
+  data:
+    volumes:
+      - .:/var/www/html/modules/flag
+  php:
+    environment:
+      - MODULE_ENABLE=flag flag_bookmark flag_follower
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+  db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+
 data:
  volumes:
    - .:/var/www/html/modules/your_module_name

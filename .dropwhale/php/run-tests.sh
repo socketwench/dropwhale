@@ -4,5 +4,5 @@
 cd /var/www/html/
 php core/scripts/run-tests.sh \
     --url http://web \
-    --dburl mysql://${DB_1_ENV_MYSQL_USER}:${DB_ENV_MYSQL_PASSWORD}@db/${DB_1_ENV_MYSQL_DATABASE} \
+    --dburl mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE} \
     $*

@@ -22,7 +22,7 @@ mkdir --parents --mode=777 /var/www/html/sites/default/files
 
 # Run the Drupal installer.
 drush si --uri=http://web --root=/var/www/html \
-      --db-url=mysql://${DB_1_ENV_MYSQL_USER}:${DB_ENV_MYSQL_PASSWORD}@db/${DB_1_ENV_MYSQL_DATABASE} \
+      --db-url=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE} \
       -y \
       --account-name=$DRUPAL_USER --account-pass=$DRUPAL_PASSWORD
 
