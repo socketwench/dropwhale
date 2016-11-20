@@ -10,8 +10,8 @@
 # Save the current working directory.
 CWD=$( pwd )
 
-echo "This will delete ALL CONTAINERS AND IMAGES from you system!"
-read -p "Are you sure? " -n 1 -r
+echo "This will delete ALL CONTAINERS, VOLUMES, AND IMAGES from you system!"
+read -p "Are you sure? (y/n)" -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
@@ -25,7 +25,10 @@ echo "Deleting all containers..."
 docker rm $(docker ps -qa)
 
 echo "Deleting all images..."
-docker rmi $(docker images -q)
+docker rmi -f $(docker images -q)
+
+echo "Deleting all volumes..."
+docker volume rm $(docker volume ls -q)
 
 # Return to the cwd.
 cd $CWD

@@ -24,7 +24,7 @@ docker-compose up -d
 
 # If there were no containers before this is the first start. Build Drupal.
 if [[ $PS == '' ]]; then
-  ${SCRIPT_DIR}/build.sh
+  ${SCRIPT_DIR}/reset.sh
 fi
 
 # Return to the cwd.
