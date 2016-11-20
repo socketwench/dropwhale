@@ -25,7 +25,7 @@ echo "Deleting all containers..."
 docker rm $(docker ps -qa)
 
 echo "Deleting all images..."
-docker rmi $(docker images -q)
+docker rmi -f $(docker images -q)
 
 echo "Deleting all volumes..."
 docker volume rm $(docker volume ls -q)

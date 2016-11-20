@@ -21,7 +21,7 @@ RUN apt-get update && \
   && rm -r /var/lib/apt/lists/*
 
 # PHP Extensions
-RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl json pdo pdo_mysql opcache \
+RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl json mysqli pdo pdo_mysql opcache \
   && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd
   # \
@@ -33,7 +33,7 @@ RUN cd /tmp && \
     chmod +x composer-install.sh && \
     ./composer-install.sh
 
-# Manually install Drupal Console.
+# Install Drupal Console.
 RUN composer global require drupal/console:@stable && \
     ln -s /root/.composer/vendor/bin/drupal /usr/bin/drupal
 
