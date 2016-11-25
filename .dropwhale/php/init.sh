@@ -5,7 +5,6 @@
 # Downloads Drupal core and copies it to the web docroot.
 #
 
-
 # If no one set the branch name in the Compose override, set DRUPAL_BRANCH to a placeholder.
 DRUPAL_BRANCH=${DRUPAL_BRANCH:-HEAD}
 
@@ -25,6 +24,9 @@ else
 fi
 
 # Copy files from the repo to the web docroot.
-rm -rf /var/www/html/core *.php
-cp -r /tmp/drupal/* /var/www/html/
-cp /tmp/drupal/.htaccess /var/www/html
+rsync -azh --delete \
+  --exclude=.git \
+  --exclude=vendor \
+  --exclude=modules \
+  --exclude=themes \
+  /tmp/drupal/ /var/www/html/

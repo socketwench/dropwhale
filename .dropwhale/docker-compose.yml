@@ -2,31 +2,20 @@ version: '2'
 services:
   web:
     build: web
-    environment:
-      - NGINX_SERVER_NAME=localhost
-      - NGINX_UPSTREAM_NAME=php
-      - DRUPAL_VERSION=8
     ports:
       - "80:80"
     volumes_from:
-      - data
+      - php
     depends_on:
       - php
   php:
     build: php
-    volumes_from:
-      - data
+    volumes:
+       - ./data/drupal:/var/www/html
     environment:
       - MYSQL_DATABASE=drupal
       - MYSQL_USER=drupal
       - MYSQL_PASSWORD=drupal
-      - PHP_SITE_NAME=dev
-      - PHP_HOST_NAME=localhost:8000
-      - PHP_SENDMAIL_PATH=/usr/sbin/sendmail -t -i -S mailhog:1025
-      #- PHP_XDEBUG_ENABLED=1
-      #- PHP_XDEBUG_AUTOSTART=1
-      #- PHP_XDEBUG_REMOTE_CONNECT_BACK=0         # This is needed to respect remote.host setting bellow
-      #- PHP_XDEBUG_REMOTE_HOST="10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
   db:
      build: db
      ports:
@@ -36,7 +25,3 @@ services:
        - MYSQL_DATABASE=drupal
        - MYSQL_USER=drupal
        - MYSQL_PASSWORD=drupal
-  data:
-    image: tianon/true
-    volumes:
-      - /var/www/html
