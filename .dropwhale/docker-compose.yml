@@ -5,13 +5,13 @@ services:
     ports:
       - "80:80"
     volumes_from:
-      - data
+      - php
     depends_on:
       - php
   php:
     build: php
-    volumes_from:
-      - data
+    volumes:
+       - ./data/drupal:/var/www/html
     environment:
       - MYSQL_DATABASE=drupal
       - MYSQL_USER=drupal
@@ -25,7 +25,3 @@ services:
        - MYSQL_DATABASE=drupal
        - MYSQL_USER=drupal
        - MYSQL_PASSWORD=drupal
-  data:
-    image: tianon/true
-    volumes:
-      - /var/www/html
