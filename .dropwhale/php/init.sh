@@ -30,3 +30,5 @@ rsync -azh --delete \
   --exclude=./modules \
   --exclude=./themes \
   /tmp/drupal/ /var/www/html/
+
+chown -R www-data:www-data /var/www/html/

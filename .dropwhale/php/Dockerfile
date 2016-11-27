@@ -10,6 +10,8 @@ ENV PHP_SITE_NAME=web \
 #    PHP_XDEBUG_REMOTE_CONNECT_BACK=0 \        # This is needed to respect remote.host setting bellow
 #    PHP_XDEBUG_REMOTE_HOST="10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
 
+COPY php.ini /etc/php7/php.ini
+
 # Copy various Dropwhale-specific scripts and mark as executable.
 COPY init.sh /root/scripts/init.sh
 RUN chmod +x /root/scripts/init.sh
