@@ -26,7 +26,7 @@ fi
 # Copy files from the repo to the web docroot.
 rsync -azh --delete \
   --exclude=.git \
-  --exclude=vendor \
-  --exclude=modules \
-  --exclude=themes \
+  --exclude=./vendor \
+  --exclude=./modules \
+  --exclude=./themes \
   /tmp/drupal/ /var/www/html/
