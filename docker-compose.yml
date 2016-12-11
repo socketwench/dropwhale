@@ -11,7 +11,7 @@ services:
   php:
     image: socketwench/dropwhale-php
     volumes:
-      - /var/www/html
+      - ./.dropwhale/data/drupal:/var/www/html
     environment:
       - MYSQL_DATABASE=drupal
       - MYSQL_USER=drupal
