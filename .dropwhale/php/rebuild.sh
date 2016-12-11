@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 #
 # rebuild.sh
@@ -18,16 +18,16 @@ cd /var/www/html
 composer install
 
 # Make the default files directory and give it world permissions.
-mkdir --parents --mode=777 /var/www/html/sites/default/files
+mkdir -p -m 777 /var/www/html/sites/default/files
 
 # Run the Drupal installer.
 drush si --uri=http://web --root=/var/www/html \
-      --db-url=mysql://${DB_1_ENV_MYSQL_USER}:${DB_ENV_MYSQL_PASSWORD}@db/${DB_1_ENV_MYSQL_DATABASE} \
+      --db-url=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE} \
       -y \
       --account-name=$DRUPAL_USER --account-pass=$DRUPAL_PASSWORD
 
 # Enable Simpletest.
-mkdir --parents --mode=777 /var/www/html/sites/simpletest
+mkdir -p -m 777 /var/www/html/sites/simpletest
 drush --uri=http://web --root=/var/www/html en -y simpletest
 
 # If we specified modules to enable in the Composer override, enable them all now.

@@ -1,0 +1,31 @@
+version: '2'
+services:
+  web:
+    build: web
+    ports:
+      - "80:80"
+    volumes_from:
+      - php
+    depends_on:
+      - php
+  php:
+    build: php
+    volumes:
+       - ./data/drupal:/var/www/html
+    environment:
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+      - ENV PHP_XDEBUG_ENABLED=1
+      - PHP_XDEBUG_AUTOSTART=1
+      - PHP_XDEBUG_REMOTE_CONNECT_BACK=1
+#      - PHP_XDEBUG_REMOTE_HOST="10.254.254.254"
+  db:
+     build: db
+     ports:
+      - 3306:3306
+     environment:
+       - MYSQL_ROOT_PASSWORD=root
+       - MYSQL_DATABASE=drupal
+       - MYSQL_USER=drupal
+       - MYSQL_PASSWORD=drupal

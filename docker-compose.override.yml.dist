@@ -1,12 +1,16 @@
-data:
- volumes:
-   - .:/var/www/html/modules/your_module_name
-cli:
- environment:
-   - MODULE_ENABLE=list_of_modules space_delimited
-db:
- environment:
-   - MYSQL_ROOT_PASSWORD=root
-   - MYSQL_DATABASE=your_database_name
-   - MYSQL_USER=your_database_user
-   - MYSQL_PASSWORD=your_database_password
+version: '2'
+services:
+  php:
+    volumes:
+      - .:/var/www/html/modules/your_module_name
+    environment:
+      - MODULE_ENABLE=list_of_modules space_delimited
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+  db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
