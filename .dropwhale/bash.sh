@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 #
 # bash.sh
@@ -26,10 +26,10 @@ fi
 
 # Start bash in the cli container.
 if [[ $1 == '' ]]; then
-	echo "Starting bash..."
-	docker exec -it $(cd $DIR && docker-compose ps -q php) bash -i
+	echo "Starting command line interface..."
+	docker exec -it $(cd $DIR && docker-compose ps -q php) sh -i
 else
-	docker exec -it $(cd $DIR && docker-compose ps -q php) bash -ic "$*"
+	docker exec -it $(cd $DIR && docker-compose ps -q php) sh -ic "$*"
 fi
 
 # Return to the cwd.
