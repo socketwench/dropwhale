@@ -15,10 +15,16 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # Get the directory of the docker-compose.yml
 DIR=$( dirname $SCRIPT_DIR )
 
+# Exit if the settings file wasn't created yet.
+if [ ! -f $DIR/dropwhale.settings ]; then
+  echo "Cannot find dropwhale.settings! Please use the dropwhale.settings.example file to create it."
+  exit 1;
+fi
+
 # Get the list of containers for this service, if any.
 PS=$(cd $DIR && docker-compose ps -q)
 
-echo "Starting containers..."
+echo "Starting Dropwhale..."
 cd $DIR
 docker-compose up -d
 

@@ -30,9 +30,19 @@ drush si --uri=http://web --root=/var/www/html \
 mkdir -p -m 777 /var/www/html/sites/simpletest
 drush --uri=http://web --root=/var/www/html en -y simpletest
 
+# Enable the module we're hosting, if any.
+if [ -n "$MODULE_NAME" ]; then
+    # Symlink the module to the modules directory
+    cd /var/www/html/modules/
+    ln -s /module/ $MODULE_NAME
+
+    # Now enable it.
+    drush --uri=http://web --root=/var/www/html en -y $MODULE_NAME
+fi
+
 # If we specified modules to enable in the Composer override, enable them all now.
-if [ -n "$MODULE_ENABLE" ]; then
-    drush --uri=http://web --root=/var/www/html en -y ${MODULE_ENABLE};
+if [ -n "$ADDITIONAL_MODULES" ]; then
+    drush --uri=http://web --root=/var/www/html en -y $ADDITIONAL_MODULES;
 fi
 
 chmod -R 777 /var/www/html/sites/default/files

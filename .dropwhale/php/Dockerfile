@@ -1,6 +1,11 @@
 FROM wodby/drupal-php:7.0
 MAINTAINER tess@deninet.com
 
+# RUN apk update && \
+#     apk add --no-cache ansible && \
+#     rm -rf /tmp/* && \
+#     rm -rf /var/cache/apk/*
+
 ENV PHP_SITE_NAME=web \
     PHP_HOST_NAME=php:8000 \
     PHP_SENDMAIL_PATH=/usr/sbin/sendmail\ -t\ -i\ -S\ mailhog:1025

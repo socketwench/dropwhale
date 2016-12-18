@@ -8,20 +8,18 @@ services:
       - php
     depends_on:
       - php
+    env_file:
+      - dropwhale.settings
   php:
     image: socketwench/dropwhale-php
     volumes:
-      - ./.dropwhale/data/drupal:/var/www/html
-    environment:
-      - MYSQL_DATABASE=drupal
-      - MYSQL_USER=drupal
-      - MYSQL_PASSWORD=drupal
+      - .:/module
+      # - ./.dropwhale/data/drupal:/tmp/drupal
+    env_file:
+      - dropwhale.settings
   db:
     image: socketwench/dropwhale-db
     ports:
       - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=drupal
-      - MYSQL_USER=drupal
-      - MYSQL_PASSWORD=drupal
+    env_file:
+      - dropwhale.settings

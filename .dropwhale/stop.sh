@@ -15,7 +15,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # Get the directory of the docker-compose.yml
 DIR=$( dirname $SCRIPT_DIR )
 
-echo "Killing containers..."
+echo "Stopping Dropwhale..."
 
 cd $DIR
 docker-compose kill

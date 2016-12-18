@@ -27,9 +27,10 @@ fi
 # Start bash in the cli container.
 if [[ $1 == '' ]]; then
 	echo "Starting command line interface..."
-	docker exec -it $(cd $DIR && docker-compose ps -q php) sh -i
+  cd $DIR
+  docker-compose exec php /bin/sh -i
 else
-	docker exec -it $(cd $DIR && docker-compose ps -q php) sh -ic "$*"
+  docker-compose exec php /bin/sh -ic "$*"
 fi
 
 # Return to the cwd.

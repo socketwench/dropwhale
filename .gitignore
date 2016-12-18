@@ -1,4 +1,5 @@
 .docker/docker-compose.override.yml
+.docker/dropwhale.settings
 .idea/
 .idea/*
 .DS_Store

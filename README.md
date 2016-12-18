@@ -11,22 +11,35 @@ need to argue with xdebug or get Drush installed. It's all built in!
 
 ## Use
 
-1. Download Dropwhale and copy the .dropwhale/ directory to the root of your module repository.
+1. Download Dropwhale and copy the following files to the root of your module repository:
+  * The .dropwhale/ directory
+  * docker-compose.yml
+  * dropwhale.settings.example
 2. You can choose to commit the directory to your module repository, or gitignore it. Dropwhale doesn't care.
-3. Reanme docker-compose.override.yml.dist to docker-compose.override.yml (no .dist).
-4. Edit docker-compose.override.yml, replace your_module_name with your module machine name.
-5. Edit the docker-compose-override.yml file, adding the
-   installation directory of your module, and adding your module name to
-   the MODULE_ENABLE environment variable.
+3. Rename dropwhale.settings.examples to dropwhale.settings.
+4. Edit dropwhale.settings, replace your_module_name with your module machine name.
+5. Make any other changes to dropwhale.settings, if desired.
 6. cd to the root of your module repository. Execute .dropwhale/start.sh
 
-If you need to rebuild Drupal at any time, execute .dropwhale/build.sh
+If you need to rebuild from a clean version of Drupal, run .dropwhale/reset.sh
 
 ## License
 
 Dropwhale is licensed under the GPLv3.
 
 ## Changelog
+
+## Version 2.0
+* New containers based on Alpine Linux for a smaller download size.
+* Switched from Apache to Nginx and PHP-FPM.
+* build.sh renamed to reset.sh for better clarity.
+* Settings moved from Docker override file to dropwhale.settings.
+* start.sh will now display an error if dropwhale.settings isn't found.
+* New MODULE_NAME setting and ADDITIONAL_MODULES settings.
+* run-tests.php now will run your module's tests when no parameters are given.
+* The parent directory is now mounted at /module, and symlinked into drupal/modules when built.
+* delete.sh now asks with a more friendly message before deleting.
+* nuke.sh now deletes volumes too.
 
 ### Version 0.5
 * Various fixes
