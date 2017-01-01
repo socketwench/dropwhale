@@ -35,6 +35,10 @@ MODULE_NAME=your_module_name
 DRUPAL_USER=admin
 DRUPAL_PASSWORD=password
 
+# The git branch name of Drupal core to clone. 
+
+DRUPAL_BRANCH=8.3.x
+
 ### Database settings ##########################################################
 
 # If you wish to change the database settings, enter them below.
