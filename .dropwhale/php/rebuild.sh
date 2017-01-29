@@ -26,6 +26,9 @@ drush si --uri=http://web --root=/var/www/html \
       -y \
       --account-name=$DRUPAL_USER --account-pass=$DRUPAL_PASSWORD
 
+# Enable Drupal Console
+composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader
+
 # Enable Simpletest.
 mkdir -p -m 777 /var/www/html/sites/simpletest
 drush --uri=http://web --root=/var/www/html en -y simpletest

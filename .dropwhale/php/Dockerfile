@@ -17,6 +17,12 @@ ENV PHP_SITE_NAME=web \
 
 COPY php.ini /etc/php7/php.ini
 
+# Install Drupal console
+RUN cd /tmp && \
+    curl https://drupalconsole.com/installer -L -o drupal.phar && \
+    mv drupal.phar /usr/local/bin/drupal && \
+    chmod +x /usr/local/bin/drupal
+
 # Copy various Dropwhale-specific scripts and mark as executable.
 COPY init.sh /root/scripts/init.sh
 RUN chmod +x /root/scripts/init.sh
