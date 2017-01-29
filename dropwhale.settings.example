@@ -54,6 +54,9 @@ MYSQL_PASSWORD=drupal
 
 #PHP_XDEBUG_ENABLED=1
 #PHP_XDEBUG_AUTOSTART=1
+
+# For Docker on Linux, all you need to do us uncomment the following.
+
 #PHP_XDEBUG_REMOTE_CONNECT_BACK=1
 
 # On Docker for Mac and Windows, you *must* specify the Hosts's IP address!
@@ -63,3 +66,7 @@ MYSQL_PASSWORD=drupal
 #   sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
 
 #PHP_XDEBUG_REMOTE_HOST=10.254.254.254
+
+# Disable remote connect back as you can't specify a host at the same time.
+
+#PHP_XDEBUG_REMOTE_CONNECT_BACK=0
