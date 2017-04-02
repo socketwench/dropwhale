@@ -1,0 +1,2 @@
+[dropwhale]
+localhost ansible_connection=local

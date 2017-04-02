@@ -1,0 +1,21 @@
+---
+web_dir: "/var/www/html"
+git_dir: "/tmp/drupal"
+
+drupal_branch: "{{ lookup('env', 'DRUPAL_BRANCH') | default('HEAD') }}"
+drupal_user: "{{ lookup('env', 'DRUPAL_USER') | default('admin') }}"
+drupal_password: "{{ lookup('env', 'DRUPAL_PASSWORD') | default('password') }}"
+drupal_uri: "http://web"
+
+module_name: "{{ lookup('env', 'MODULE_NAME') | default('') }}"
+module_dir: "/module/"
+additional_modules: "{{ lookup('env', 'ADDITIONAL_MODULES') | default('') }}"
+
+db_user: "{{ lookup('env', 'MYSQL_USER') }}"
+db_password: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+db_name: "{{ lookup('env', 'MYSQL_DATABASE') }}"
+db_host: "db"
+db_url: "mysql://{{ db_user }}:{{ db_password }}@{{ db_host }}/{{ db_name }}"
+
+simpletest_sites_dir: "{{ web_dir }}/sites/simpletest"
+simpletest_out_dir: "{{ simpletest_sites_dir }}/browser_output"

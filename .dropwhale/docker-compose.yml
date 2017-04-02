@@ -4,28 +4,41 @@ services:
     build: web
     ports:
       - "80:80"
-    volumes_from:
-      - php
-    depends_on:
-      - php
-  php:
-    build: php
     volumes:
        - ./data/drupal:/tmp/drupal
     environment:
       - MYSQL_DATABASE=drupal
       - MYSQL_USER=drupal
       - MYSQL_PASSWORD=drupal
-      - ENV PHP_XDEBUG_ENABLED=1
+      - PHP_XDEBUG_ENABLED=1
       - PHP_XDEBUG_AUTOSTART=1
       - PHP_XDEBUG_REMOTE_CONNECT_BACK=1
 #      - PHP_XDEBUG_REMOTE_HOST="10.254.254.254"
   db:
-     build: db
-     ports:
-      - 3306:3306
-     environment:
-       - MYSQL_ROOT_PASSWORD=root
-       - MYSQL_DATABASE=drupal
-       - MYSQL_USER=drupal
-       - MYSQL_PASSWORD=drupal
+    build: db
+    ports:
+    - 3306:3306
+    environment:
+     - MYSQL_ROOT_PASSWORD=root
+     - MYSQL_DATABASE=drupal
+     - MYSQL_USER=drupal
+     - MYSQL_PASSWORD=drupal
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    ports:
+     - "8001:80"
+    environment:
+     - MYSQL_ROOT_PASSWORD=root
+     - MYSQL_DATABASE=drupal
+     - MYSQL_USER=drupal
+     - MYSQL_PASSWORD=drupal
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8002:8025"

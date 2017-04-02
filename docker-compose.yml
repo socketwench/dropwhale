@@ -4,17 +4,8 @@ services:
     image: socketwench/dropwhale-web
     ports:
       - "80:80"
-    volumes_from:
-      - php
-    depends_on:
-      - php
-    env_file:
-      - dropwhale.settings
-  php:
-    image: socketwench/dropwhale-php
     volumes:
       - .:/module
-      # - ./.dropwhale/data/drupal:/tmp/drupal
     env_file:
       - dropwhale.settings
   db:
@@ -23,3 +14,19 @@ services:
       - 3306:3306
     env_file:
       - dropwhale.settings
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    ports:
+     - "8001:80"
+    env_file:
+     - dropwhale.settings
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8002:8025"

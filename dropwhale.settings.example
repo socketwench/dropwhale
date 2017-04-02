@@ -48,6 +48,10 @@ MYSQL_DATABASE=drupal
 MYSQL_USER=drupal
 MYSQL_PASSWORD=drupal
 
+# If you get "the server has gone away" errors, try increasing the following:
+
+MYSQL_MAX_ALLOWED_PACKET=256M
+
 ### XDebug settings ############################################################
 
 # Uncomment and configure the below to enable XDebug.
@@ -55,18 +59,44 @@ MYSQL_PASSWORD=drupal
 #PHP_XDEBUG_ENABLED=1
 #PHP_XDEBUG_AUTOSTART=1
 
-# For Docker on Linux, all you need to do us uncomment the following.
+# On Linux, you can just uncomment the below and debug!
 
 #PHP_XDEBUG_REMOTE_CONNECT_BACK=1
 
-# On Docker for Mac and Windows, you *must* specify the Hosts's IP address!
+# For Docker for macOS or Windows, you need to provide your IP address.
 #
-# On macOS, create a loopback alias with:
+# For macOS, you can create an alias of your loopback (127.0.0.1) address
+# with the following command:
 #
-#   sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
+# sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
+#
+# If you are running Linux and sharing your .env with mixed-OS team members,
+# you can also create a URL alias using the following:
+#
+# sudo ip -4 addr add 10.254.254.254/32 dev lo
 
 #PHP_XDEBUG_REMOTE_HOST=10.254.254.254
 
-# Disable remote connect back as you can't specify a host at the same time.
+# For PHP_XDEBUG_REMOTE_HOST to work, you need to *disable* connect back.
 
 #PHP_XDEBUG_REMOTE_CONNECT_BACK=0
+
+# Pipe XDebug logs to STDOUT? You only need to do this if Xdebug isn't working.
+
+#PHP_XDEBUG_STDOUT_LOGS=1
+
+### XDebug profiler ############################################################
+
+# Set the GET or cookie parameter to run XDebug profiling.
+
+# PHP_XDEBUG_PROFILE_TRIGGER=XDEBUG_PROFILE
+
+# If you want to profile every page, uncomment the following.
+
+# PHP_XDEBUG_PROFILE_FORCE=1
+
+### PHP settings ###############################################################
+
+# Uncomment and configure to set the sendmail path.
+
+PHP_SENDMAIL_PATH=/usr/sbin/sendmail -t -i -S mailhog:1025
