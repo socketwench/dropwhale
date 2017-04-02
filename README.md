@@ -29,9 +29,14 @@ Dropwhale is licensed under the GPLv3.
 
 ## Changelog
 
+## Version 2.1
+* Switched [TEN7/Dockstack](https://github.com/ten7/dockstack) as a base.
+* Included phpMyAdmin and Mailhog for DB access and email debugging.
+* phpunit.php now will run your module's tests when no parameters are given.
+* Ansible was added to the web container to power builds.
+
 ## Version 2.0
 * New containers based on Alpine Linux for a smaller download size.
-* Switched from Apache to Nginx and PHP-FPM.
 * build.sh renamed to reset.sh for better clarity.
 * Settings moved from Docker override file to dropwhale.settings.
 * start.sh will now display an error if dropwhale.settings isn't found.

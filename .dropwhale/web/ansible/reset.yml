@@ -1,0 +1,86 @@
+---
+- hosts: all
+  tasks:
+    - name: Clone drupal.
+      git:
+        repo: "http://git.drupal.org/project/drupal.git"
+        dest: "{{ git_dir }}"
+        version: "{{ drupal_branch }}"
+        update: yes
+        force: yes
+    - name: Copy files to the web directory.
+      synchronize:
+        src: "{{ git_dir }}/"
+        dest: "{{ web_dir }}"
+        delete: yes
+        rsync_opts:
+          - "--exclude=.git"
+    - name: Composer install.
+      composer:
+        command: install
+        working_dir: "{{ web_dir }}"
+    - name: Create files directory.
+      file:
+        path: "{{ web_dir }}/sites/default/files"
+        state: directory
+        mode: "0777"
+    - name: Install drupal
+      shell: |
+        drush si \
+              --uri={{ drupal_uri }} \
+              --root={{ web_dir }} \
+              --db-url={{ db_url }} \
+              -y \
+              --account-name={{ drupal_user }} \
+              --account-pass={{ drupal_password}}
+      args:
+        chdir: "{{ web_dir }}"
+    # - name: Replace hash_salt
+    #   lineinfile:
+    #     name: "{{ web_dir }}/sites/default/settings.php"
+    #     state: present
+    #     regexp: "^\\$settings\\['hash_salt'\\] = '';"
+    #     line: "$settings['hash_salt'] = getenv('MYSQL_DATABASE_NAME');"
+    - name: Enable Drupal Console.
+      composer:
+        command: require
+        arguments: "drupal/console:~1.0"
+        prefer_dist: yes
+        optimize_autoloader: yes
+        working_dir: "{{ web_dir }}"
+    - name: Create directories to support simpletest.
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0777"
+      with_items:
+        - "{{ simpletest_sites_dir }}"
+        - "{{ simpletest_out_dir }}"
+    - name: Set simpletest environment vars globally.
+      lineinfile:
+        dest: "/etc/profile"
+        line: "export {{ item.name }}='{{ item.value }}'"
+        insertafter: 'EOF'
+        state: present
+      with_items:
+        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
+        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
+        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir}}" }
+    - name: Enable simpletest.
+      shell: |
+        drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y simpletest
+      args:
+        chdir: "{{ web_dir }}"
+    - name: Symlink the module directory.
+      file:
+        src: "{{ module_dir }}"
+        dest: "{{ web_dir }}/modules/{{ module_name }}"
+        state: link
+    - name: Enable the module.
+      shell: |
+        drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y {{ module_name }}
+    - name: Enable additional modules, if any.
+      shell: |
+        drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y {{ additional_modules }}
+      when:
+        - not (additional_modules | trim == '')

@@ -28,9 +28,9 @@ fi
 if [[ $1 == '' ]]; then
 	echo "Starting command line interface..."
   cd $DIR
-  docker-compose exec php /bin/sh -i
+  docker-compose exec web /bin/sh --login -i
 else
-  docker-compose exec php /bin/sh -ic "$*"
+  docker-compose exec web /bin/sh --login -ic "$*"
 fi
 
 # Return to the cwd.
