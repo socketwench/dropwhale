@@ -31,15 +31,18 @@ Dropwhale is licensed under the GPLv3.
 
 ## Version 2.0
 * New containers based on Alpine Linux for a smaller download size.
-* Switched from Apache to Nginx and PHP-FPM.
+* Switched [TEN7/Dockstack](https://github.com/ten7/dockstack) as a base.
+* Included phpMyAdmin and Mailhog for DB access and email debugging.
 * build.sh renamed to reset.sh for better clarity.
 * Settings moved from Docker override file to dropwhale.settings.
 * start.sh will now display an error if dropwhale.settings isn't found.
 * New MODULE_NAME setting and ADDITIONAL_MODULES settings.
 * run-tests.php now will run your module's tests when no parameters are given.
+* phpunit.php now will run your module's tests when no parameters are given.
 * The parent directory is now mounted at /module, and symlinked into drupal/modules when built.
 * delete.sh now asks with a more friendly message before deleting.
 * nuke.sh now deletes volumes too.
+* Ansible was added to the web container to power builds.
 
 ### Version 0.5
 * Various fixes
