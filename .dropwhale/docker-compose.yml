@@ -4,8 +4,8 @@ services:
     build: web
     ports:
       - "80:80"
-    volumes:
-       - ./data/drupal:/tmp/drupal
+    # volumes:
+    #    - ./data/drupal:/tmp/drupal
     environment:
       - MYSQL_DATABASE=drupal
       - MYSQL_USER=drupal
