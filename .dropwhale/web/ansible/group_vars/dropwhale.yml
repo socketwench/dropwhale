@@ -2,9 +2,9 @@
 web_dir: "/var/www/html"
 git_dir: "/tmp/drupal"
 
-drupal_branch: "{{ lookup('env', 'DRUPAL_BRANCH') | default('HEAD') }}"
-drupal_user: "{{ lookup('env', 'DRUPAL_USER') | default('admin') }}"
-drupal_password: "{{ lookup('env', 'DRUPAL_PASSWORD') | default('password') }}"
+drupal_branch: "{{ lookup('env', 'DRUPAL_BRANCH') | default('HEAD', true) }}"
+drupal_user: "{{ lookup('env', 'DRUPAL_USER') | default('admin', true) }}"
+drupal_password: "{{ lookup('env', 'DRUPAL_PASSWORD') | default('password', true) }}"
 drupal_uri: "http://web"
 
 module_name: "{{ lookup('env', 'MODULE_NAME') | default('') }}"

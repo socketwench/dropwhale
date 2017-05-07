@@ -17,7 +17,7 @@ DIR=$( dirname $SCRIPT_DIR )
 
 # Run the rebuild script in the cli container.
 echo "Building Drupal..."
-${SCRIPT_DIR}/bash.sh ansible-playbook -i /var/ansible/inventory/local /var/ansible/reset.yml
+${SCRIPT_DIR}/bash.sh ansible-playbook -i /var/ansible/inventory/dropwhale /var/ansible/reset.yml
 
 # Return to the cwd.
 cd $CWD

@@ -15,6 +15,11 @@
         delete: yes
         rsync_opts:
           - "--exclude=.git"
+    - name: Drush require.
+      composer:
+        command: require
+        arguments: "drush/drush:master"
+        working_dir: "{{ web_dir }}"
     - name: Composer install.
       composer:
         command: install
@@ -41,13 +46,13 @@
     #     state: present
     #     regexp: "^\\$settings\\['hash_salt'\\] = '';"
     #     line: "$settings['hash_salt'] = getenv('MYSQL_DATABASE_NAME');"
-    - name: Enable Drupal Console.
-      composer:
-        command: require
-        arguments: "drupal/console:~1.0"
-        prefer_dist: yes
-        optimize_autoloader: yes
-        working_dir: "{{ web_dir }}"
+    # - name: Enable Drupal Console.
+    #   composer:
+    #     command: require
+    #     arguments: "drupal/console:~1.0"
+    #     prefer_dist: yes
+    #     optimize_autoloader: yes
+    #     working_dir: "{{ web_dir }}"
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"
@@ -76,9 +81,13 @@
         src: "{{ module_dir }}"
         dest: "{{ web_dir }}/modules/{{ module_name }}"
         state: link
+      when:
+        - module_name != ''
     - name: Enable the module.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y {{ module_name }}
+      when:
+        - module_name != ''
     - name: Enable additional modules, if any.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y {{ additional_modules }}
