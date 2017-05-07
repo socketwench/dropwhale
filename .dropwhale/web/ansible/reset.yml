@@ -70,12 +70,34 @@
       with_items:
         - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
         - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
-        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir}}" }
+        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
     - name: Enable simpletest.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y simpletest
       args:
         chdir: "{{ web_dir }}"
+    - name: Copy phpunit.xml.dist phpunit.xml.
+      copy:
+        src: "{{ web_dir }}/core/phpunit.xml.dist"
+        dest: "{{ web_dir }}/core/phpunit.xml"
+    - name: Configure phpunit.xml.
+      lineinfile:
+        path: "{{ web_dir }}/core/phpunit.xml"
+        regexp: "<env name=\"{{ item.name }}\" value=\"\"/>"
+        line: "<env name=\"{{ item.name }}\" value=\"{{ item.value }}\"/>"
+      with_items:
+        - {
+            name: "SIMPLETEST_BASE_URL",
+            value: "{{ drupal_uri }}"
+          }
+        - {
+            name: "SIMPLETEST_DB",
+            value: "{{ db_url }}"
+          }
+        - {
+            name: "BROWSERTEST_OUTPUT_DIRECTORY",
+            value: "{{ simpletest_out_dir }}"
+          }
     - name: Symlink the module directory.
       file:
         src: "{{ module_dir }}"
