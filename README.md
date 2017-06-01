@@ -1,3 +1,5 @@
+<img src="logo.png" alt="Dropwhale logo" align="right"/>
+
 # dropwhale
 A Drop-in Docker environment for Drupal module testing
 
