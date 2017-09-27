@@ -3,14 +3,6 @@ MAINTAINER tess@deninet.com
 
 ENV DRUPAL_VERSION=8
 
-RUN apk -U upgrade && \
-    apk --update --no-cache add \
-        rsync \
-        ansible \
-        openssh-client  && \
-        rm -rf /tmp/* && \
-        rm -rf /var/cache/apk/*
-
 RUN mkdir -p /etc/ansible/ && \
     echo localhost ansible_connection=local > /etc/ansible/hosts
 
