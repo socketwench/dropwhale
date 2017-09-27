@@ -15,6 +15,11 @@
         delete: yes
         rsync_opts:
           - "--exclude=.git"
+    - name: Drush require.
+      composer:
+        command: require
+        arguments: "drush/drush:^9"
+        working_dir: "{{ web_dir }}"
     - name: Composer install.
       composer:
         command: install
@@ -41,13 +46,13 @@
     #     state: present
     #     regexp: "^\\$settings\\['hash_salt'\\] = '';"
     #     line: "$settings['hash_salt'] = getenv('MYSQL_DATABASE_NAME');"
-    - name: Enable Drupal Console.
-      composer:
-        command: require
-        arguments: "drupal/console:~1.0"
-        prefer_dist: yes
-        optimize_autoloader: yes
-        working_dir: "{{ web_dir }}"
+    # - name: Enable Drupal Console.
+    #   composer:
+    #     command: require
+    #     arguments: "drupal/console:~1.0"
+    #     prefer_dist: yes
+    #     optimize_autoloader: yes
+    #     working_dir: "{{ web_dir }}"
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"
@@ -65,20 +70,46 @@
       with_items:
         - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
         - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
-        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir}}" }
+        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
     - name: Enable simpletest.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y simpletest
       args:
         chdir: "{{ web_dir }}"
+    - name: Copy phpunit.xml.dist phpunit.xml.
+      copy:
+        src: "{{ web_dir }}/core/phpunit.xml.dist"
+        dest: "{{ web_dir }}/core/phpunit.xml"
+    - name: Configure phpunit.xml.
+      lineinfile:
+        path: "{{ web_dir }}/core/phpunit.xml"
+        regexp: "<env name=\"{{ item.name }}\" value=\"\"/>"
+        line: "<env name=\"{{ item.name }}\" value=\"{{ item.value }}\"/>"
+      with_items:
+        - {
+            name: "SIMPLETEST_BASE_URL",
+            value: "{{ drupal_uri }}"
+          }
+        - {
+            name: "SIMPLETEST_DB",
+            value: "{{ db_url }}"
+          }
+        - {
+            name: "BROWSERTEST_OUTPUT_DIRECTORY",
+            value: "{{ simpletest_out_dir }}"
+          }
     - name: Symlink the module directory.
       file:
         src: "{{ module_dir }}"
         dest: "{{ web_dir }}/modules/{{ module_name }}"
         state: link
+      when:
+        - module_name != ''
     - name: Enable the module.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y {{ module_name }}
+      when:
+        - module_name != ''
     - name: Enable additional modules, if any.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y {{ additional_modules }}
