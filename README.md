@@ -29,6 +29,11 @@ Dropwhale is licensed under the GPLv3.
 
 ## Changelog
 
+## Version 2.2
+* Switched to Drush 9.x stable.
+* Configured phpunit.xml.
+* Internal improvements.
+
 ## Version 2.1
 * Switched [TEN7/Dockstack](https://github.com/ten7/dockstack) as a base.
 * Included phpMyAdmin and Mailhog for DB access and email debugging.
