@@ -4,9 +4,12 @@ MAINTAINER tess@deninet.com
 ENV DRUPAL_VERSION=8
 
 RUN mkdir -p /etc/ansible/ && \
-    echo localhost ansible_connection=local > /etc/ansible/hosts
+    echo localhost ansible_connection=local > /etc/ansible/hosts && \
+    chown apache:www-data /etc/ansible && \
+    chmod a+rwx -R /etc/ansible
 
-COPY ansible/ /var/ansible/
+COPY ansible/ /ansible/
+RUN chown apache:www-data /ansible
 
 # Change permissions to the xdebug logs so testing doesn't error out.
 RUN chown -R apache:www-data /var/log/apache2/
