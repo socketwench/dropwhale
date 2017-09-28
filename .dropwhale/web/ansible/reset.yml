@@ -24,11 +24,15 @@
       composer:
         command: install
         working_dir: "{{ web_dir }}"
+    # The files directory has to be the same user and group as the web server
+    # so that run-tests.sh and PHPUnit don't encounter permission issues.
     - name: Create files directory.
       file:
         path: "{{ web_dir }}/sites/default/files"
         state: directory
         mode: "0777"
+        owner: "apache"
+        group: "www-data"
     - name: Install drupal
       shell: |
         drush si \
@@ -98,6 +102,9 @@
             name: "BROWSERTEST_OUTPUT_DIRECTORY",
             value: "{{ simpletest_out_dir }}"
           }
+    - name: Change the owner and group to the same as the web server.
+      shell: >
+        chown -R apache:www-data {{ web_dir }}
     - name: Symlink the module directory.
       file:
         src: "{{ module_dir }}"

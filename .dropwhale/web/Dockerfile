@@ -8,9 +8,14 @@ RUN mkdir -p /etc/ansible/ && \
 
 COPY ansible/ /var/ansible/
 
-# Copy various Dropwhale-specific scripts and mark as executable.
-COPY phpunit.sh /root/scripts/phpunit.sh
-RUN chmod +x /root/scripts/phpunit.sh
+# Change permissions to the xdebug logs so testing doesn't error out.
+RUN chown -R apache:www-data /var/log/apache2/
 
-COPY run-tests.sh /root/scripts/run-tests.sh
-RUN chmod +x /root/scripts/run-tests.sh
+# Copy various Dropwhale-specific scripts and mark as executable.
+COPY phpunit.sh /scripts/phpunit.sh
+RUN chown apache:www-data /scripts/phpunit.sh
+RUN chmod +x /scripts/phpunit.sh
+
+COPY run-tests.sh /scripts/run-tests.sh
+RUN chown apache:www-data /scripts/run-tests.sh
+RUN chmod +x /scripts/run-tests.sh

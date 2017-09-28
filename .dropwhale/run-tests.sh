@@ -15,7 +15,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 DIR=$( dirname $SCRIPT_DIR )
 
 # Invoke our run-tests.sh script in the cli container.
-${SCRIPT_DIR}/bash.sh /root/scripts/run-tests.sh "$*"
+${SCRIPT_DIR}/bash.sh /scripts/run-tests.sh "$*"
 
 # Return to the cwd.
 cd $CWD
