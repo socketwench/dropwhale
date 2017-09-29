@@ -1,0 +1,54 @@
+---
+- hosts: all
+  tasks:
+    - name: Remove dockstack's drush global symlink.
+      file:
+        path: "/usr/bin/drush"
+        state: absent
+    - name: Create localhost in ansible hosts
+      lineinfile:
+        path: "/etc/ansible/hosts"
+        line: "localhost ansible_connection=local"
+        state: present
+        create: yes
+        owner: "apache"
+        group: "www-data"
+    - name: Add composer bin for the apache user to global path.
+      lineinfile:
+        dest: "/etc/profile"
+        regexp: "^export PATH="
+        line: "export PATH={{ env_path }}"
+        state: present
+    - name: Set various environment vars globally.
+      lineinfile:
+        dest: "/etc/profile"
+        line: "export {{ item.name }}='{{ item.value }}'"
+        insertafter: 'EOF'
+        state: present
+      with_items:
+        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
+        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
+        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
+        - { name: "DRUPAL_VERSION", value: "8" }
+    - name: Change the owner and group of various dirs to the apache user.
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "apache"
+        group: "www-data"
+        recurse: yes
+      with_items:
+        - "/ansible"
+        - "/scripts"
+        - "/var/log/apache2"
+        - "{{ web_dir }}"
+    - name: Copy scripts.
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: "apache"
+        group: "www-data"
+        mode: "0777"
+      with_items:
+        - { src: "templates/phpunit.sh", dest: "/scripts/phpunit.sh" }
+        - { src: "templates/run-tests.sh", dest: "/scripts/run-tests.sh" }

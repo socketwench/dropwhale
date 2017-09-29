@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Clear the cache.
-cd /var/www/html
+cd {{ web_dir }}
 drush cr all
 
 # Run the tests.

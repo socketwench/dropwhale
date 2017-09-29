@@ -2,6 +2,8 @@
 web_dir: "/var/www/html"
 git_dir: "/tmp/drupal"
 
+env_path: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/html/vendor/bin"
+
 drupal_branch: "{{ lookup('env', 'DRUPAL_BRANCH') | default('HEAD', true) }}"
 drupal_user: "{{ lookup('env', 'DRUPAL_USER') | default('admin', true) }}"
 drupal_password: "{{ lookup('env', 'DRUPAL_PASSWORD') | default('password', true) }}"

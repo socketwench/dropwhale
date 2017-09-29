@@ -65,16 +65,6 @@
       with_items:
         - "{{ simpletest_sites_dir }}"
         - "{{ simpletest_out_dir }}"
-    - name: Set simpletest environment vars globally.
-      lineinfile:
-        dest: "/etc/profile"
-        line: "export {{ item.name }}='{{ item.value }}'"
-        insertafter: 'EOF'
-        state: present
-      with_items:
-        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
-        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
-        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
     - name: Enable simpletest.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y simpletest
@@ -102,9 +92,6 @@
             name: "BROWSERTEST_OUTPUT_DIRECTORY",
             value: "{{ simpletest_out_dir }}"
           }
-    - name: Change the owner and group to the same as the web server.
-      shell: >
-        chown -R apache:www-data {{ web_dir }}
     - name: Symlink the module directory.
       file:
         src: "{{ module_dir }}"
