@@ -41,7 +41,7 @@
         - "/ansible"
         - "/scripts"
         - "/var/log/apache2"
-        - "{{ web_dir }}"
+        - "/var/www"
     - name: Copy scripts.
       template:
         src: "{{ item.src }}"
