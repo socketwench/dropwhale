@@ -63,6 +63,23 @@
       shell: >
         composer global require drupal/coder &&
         phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
+    # This has to be run during the run phase so the database URI is generated
+    # from dropwhale.settings.
+    - name: Set various environment vars globally.
+      lineinfile:
+        dest: "/etc/profile"
+        regexp: "^export {{ item.name }}="
+        line: "export {{ item.name }}='{{ item.value }}'"
+        insertafter: 'EOF'
+        create: yes
+        state: present
+        group: "www-data"
+        mode: "0664"
+      with_items:
+        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
+        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
+        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
+        - { name: "DRUPAL_VERSION", value: "8" }
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"

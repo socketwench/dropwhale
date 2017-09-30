@@ -22,17 +22,8 @@
         regexp: "^export PATH="
         line: "export PATH={{ env_path }}"
         state: present
-    - name: Set various environment vars globally.
-      lineinfile:
-        dest: "/etc/profile"
-        line: "export {{ item.name }}='{{ item.value }}'"
-        insertafter: 'EOF'
-        state: present
-      with_items:
-        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
-        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
-        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
-        - { name: "DRUPAL_VERSION", value: "8" }
+        group: "www-data"
+        mode: "g+rw"
     - name: Change the owner and group of various dirs to the apache user.
       file:
         path: "{{ item }}"
@@ -40,11 +31,19 @@
         owner: "apache"
         group: "www-data"
         recurse: yes
+        mode: "g+rwx"
       with_items:
+        - "/etc"
         - "/ansible"
         - "/scripts"
         - "/var/log/apache2"
         - "/var/www"
+    - name: Change the group and mode of /etc/profile to let apache set env vars.
+      file:
+        path: "/etc/profile"
+        state: file
+        group: "www-data"
+        mode: "g+rw"
     - name: Copy scripts.
       template:
         src: "{{ item.src }}"
