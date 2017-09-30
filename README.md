@@ -32,6 +32,7 @@ Dropwhale is licensed under the GPLv3.
 ## Version 2.3
 * Fixed longstanding testing issues with permissions!
 * Re-enabled Drupal console now that it's stable.
+* Updated and fixed phpcs to run coding standard tests.
 * Switched to the apache user for shell environment, updated permissions.
 * Switched to Ansible to build container.
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 #
-# drush.sh
+# phpcs.sh
 #
-# Run drush in the cli container.
+# Run phpcs against the module or passed parameters.
 #
 
 # Save the current working directory.
@@ -16,7 +16,6 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 DIR=$( dirname $SCRIPT_DIR )
 
 # Invoke drush in the cli container, passing any user input.
-${SCRIPT_DIR}/bash.sh phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md /var/www/html/modules/
-
+${SCRIPT_DIR}/bash.sh /scripts/phpcs.sh "$*"
 # Return to the cwd.
 cd $CWD

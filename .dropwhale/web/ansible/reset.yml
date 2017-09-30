@@ -57,6 +57,12 @@
         prefer_dist: yes
         optimize_autoloader: yes
         working_dir: "{{ web_dir }}"
+    # @todo Change this to a seperate composer and shell task when Ansible 2.4
+    # is available in Dockstack.
+    - name: Enable drupal/coder for phpcs
+      shell: >
+        composer global require drupal/coder &&
+        phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"
