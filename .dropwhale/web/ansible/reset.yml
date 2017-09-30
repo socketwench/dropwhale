@@ -50,13 +50,13 @@
     #     state: present
     #     regexp: "^\\$settings\\['hash_salt'\\] = '';"
     #     line: "$settings['hash_salt'] = getenv('MYSQL_DATABASE_NAME');"
-    # - name: Enable Drupal Console.
-    #   composer:
-    #     command: require
-    #     arguments: "drupal/console:~1.0"
-    #     prefer_dist: yes
-    #     optimize_autoloader: yes
-    #     working_dir: "{{ web_dir }}"
+    - name: Enable Drupal Console.
+      composer:
+        command: require
+        arguments: "drupal/console:^1"
+        prefer_dist: yes
+        optimize_autoloader: yes
+        working_dir: "{{ web_dir }}"
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"

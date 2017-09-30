@@ -1,10 +1,13 @@
 ---
 - hosts: all
   tasks:
-    - name: Remove dockstack's drush global symlink.
+    - name: Remove dockstack's global symlinkss so we can use composer ones.
       file:
-        path: "/usr/bin/drush"
+        path: "{{ item }}"
         state: absent
+      with_items:
+        - "/usr/bin/drush"
+        - "/usr/bin/drupal"
     - name: Create localhost in ansible hosts
       lineinfile:
         path: "/etc/ansible/hosts"
