@@ -24,11 +24,15 @@
       composer:
         command: install
         working_dir: "{{ web_dir }}"
+    # The files directory has to be the same user and group as the web server
+    # so that run-tests.sh and PHPUnit don't encounter permission issues.
     - name: Create files directory.
       file:
         path: "{{ web_dir }}/sites/default/files"
         state: directory
         mode: "0777"
+        owner: "apache"
+        group: "www-data"
     - name: Install drupal
       shell: |
         drush si \
@@ -46,13 +50,36 @@
     #     state: present
     #     regexp: "^\\$settings\\['hash_salt'\\] = '';"
     #     line: "$settings['hash_salt'] = getenv('MYSQL_DATABASE_NAME');"
-    # - name: Enable Drupal Console.
-    #   composer:
-    #     command: require
-    #     arguments: "drupal/console:~1.0"
-    #     prefer_dist: yes
-    #     optimize_autoloader: yes
-    #     working_dir: "{{ web_dir }}"
+    - name: Enable Drupal Console.
+      composer:
+        command: require
+        arguments: "drupal/console:^1"
+        prefer_dist: yes
+        optimize_autoloader: yes
+        working_dir: "{{ web_dir }}"
+    # @todo Change this to a seperate composer and shell task when Ansible 2.4
+    # is available in Dockstack.
+    - name: Enable drupal/coder for phpcs
+      shell: >
+        composer global require drupal/coder &&
+        phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
+    # This has to be run during the run phase so the database URI is generated
+    # from dropwhale.settings.
+    - name: Set various environment vars globally.
+      lineinfile:
+        dest: "/etc/profile"
+        regexp: "^export {{ item.name }}="
+        line: "export {{ item.name }}='{{ item.value }}'"
+        insertafter: 'EOF'
+        create: yes
+        state: present
+        group: "www-data"
+        mode: "0664"
+      with_items:
+        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
+        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
+        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
+        - { name: "DRUPAL_VERSION", value: "8" }
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"
@@ -61,16 +88,6 @@
       with_items:
         - "{{ simpletest_sites_dir }}"
         - "{{ simpletest_out_dir }}"
-    - name: Set simpletest environment vars globally.
-      lineinfile:
-        dest: "/etc/profile"
-        line: "export {{ item.name }}='{{ item.value }}'"
-        insertafter: 'EOF'
-        state: present
-      with_items:
-        - { name: "SIMPLETEST_DB", value: "{{ db_url }}" }
-        - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
-        - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
     - name: Enable simpletest.
       shell: |
         drush --uri={{ drupal_uri }} --root={{ web_dir }} en -y simpletest
