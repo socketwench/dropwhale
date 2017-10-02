@@ -30,3 +30,7 @@ services:
     image: mailhog/mailhog
     ports:
       - "8002:8025"
+  phantomjs:
+    image: previousnext/gastonjs:1.0.2
+    ports:
+      - "8510:8510"

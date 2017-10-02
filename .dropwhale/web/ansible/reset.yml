@@ -80,6 +80,7 @@
         - { name: "SIMPLETEST_BASE_URL", value: "{{ drupal_uri }}" }
         - { name: "BROWSERTEST_OUTPUT_DIRECTORY", value: "{{ simpletest_out_dir }}" }
         - { name: "DRUPAL_VERSION", value: "8" }
+        - { name: "MINK_DRIVER_ARGS_JS", value: '["http://phantomjs:8510"]' }
     - name: Create directories to support simpletest.
       file:
         path: "{{ item }}"
