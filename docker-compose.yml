@@ -31,6 +31,6 @@ services:
     ports:
       - "8002:8025"
   phantomjs:
-    image: previousnext/gastonjs:1.0.2
+    image: socketwench/dropwhale-phantomjs
     ports:
       - "8510:8510"
