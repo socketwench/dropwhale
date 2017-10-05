@@ -18,7 +18,7 @@
     - name: Drush require.
       composer:
         command: require
-        arguments: "drush/drush:^9"
+        arguments: "drush/drush:^9.0.0-beta4"
         working_dir: "{{ web_dir }}"
     - name: Composer install.
       composer:

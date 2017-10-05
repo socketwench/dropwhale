@@ -29,6 +29,10 @@ Dropwhale is licensed under the GPLv3.
 
 ## Changelog
 
+## Version 2.4
+* Added FunctionalJavascript testing support via PhantomJS
+* Set Drush to 9.0.0-beta4 due to breakage in beta5.
+
 ## Version 2.3
 * Fixed longstanding testing issues with permissions!
 * Re-enabled Drupal console now that it's stable.
@@ -37,7 +41,7 @@ Dropwhale is licensed under the GPLv3.
 * Switched to Ansible to build container.
 
 ## Version 2.2
-* Switched to Drush 9.x stable.
+* Switched to Drush 9.x.
 * Configured phpunit.xml.
 * Internal improvements.
 
