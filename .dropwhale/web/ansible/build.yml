@@ -54,4 +54,5 @@
       with_items:
         - { src: "templates/phpunit.sh", dest: "/scripts/phpunit.sh" }
         - { src: "templates/run-tests.sh", dest: "/scripts/run-tests.sh" }
+        - { src: "templates/run-js-tests.sh", dest: "/scripts/run-js-tests.sh" }
         - { src: "templates/phpcs.sh", dest: "/scripts/phpcs.sh" }
