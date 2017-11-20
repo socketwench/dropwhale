@@ -37,7 +37,7 @@ DRUPAL_PASSWORD=password
 
 # The git branch name of Drupal core to clone.
 
-DRUPAL_BRANCH=8.3.x
+DRUPAL_BRANCH=8.5.x
 
 ### Database settings ##########################################################
 
