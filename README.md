@@ -29,6 +29,9 @@ Dropwhale is licensed under the GPLv3.
 
 ## Changelog
 
+## Version 2.5
+* [pull/#32](https://github.com/socketwench/dropwhale/pull/32), updated Drupal base branch in to 8.5.x.
+
 ## Version 2.4
 * Added FunctionalJavascript testing support via PhantomJS
 * Set Drush to 9.0.0-beta4 due to breakage in beta5.
