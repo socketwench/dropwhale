@@ -31,6 +31,7 @@ Dropwhale is licensed under the GPLv3.
 
 ## Version 2.5
 * [pull/#32](https://github.com/socketwench/dropwhale/pull/32), updated Drupal base branch in to 8.5.x.
+* [pull/#20](https://github.com/socketwench/dropwhale/pull/20), updated docker-compose.yml to version 3. 
 
 ## Version 2.4
 * Added FunctionalJavascript testing support via PhantomJS
