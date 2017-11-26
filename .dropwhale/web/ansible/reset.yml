@@ -18,7 +18,7 @@
     - name: Drush require.
       composer:
         command: require
-        arguments: "drush/drush:^9.0.0-beta4"
+        arguments: "drush/drush:^9.0.0-beta9"
         working_dir: "{{ web_dir }}"
     - name: Composer install.
       composer:
@@ -39,6 +39,7 @@
               --uri={{ drupal_uri }} \
               --root={{ web_dir }} \
               --db-url={{ db_url }} \
+              --sites-subdir={{ drupal_uri }} \
               -y \
               --account-name={{ drupal_user }} \
               --account-pass={{ drupal_password}}
