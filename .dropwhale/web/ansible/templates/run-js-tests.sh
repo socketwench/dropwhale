@@ -2,7 +2,7 @@
 
 # Clear the cache.
 cd {{ web_dir }}
-drush cr all
+drush cr
 
 # Override the default Mink settings to point at the phantomjs container.
 export MINK_DRIVER_ARGS='["http://phantomjs:8510"]'

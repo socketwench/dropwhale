@@ -2,7 +2,7 @@
 
 # Clear the cache.
 cd {{ web_dir }}
-drush cr all
+drush cr
 
 # Run the tests.
 if [ -n $MODULE_NAME ] && [ -z $* ]; then
