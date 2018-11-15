@@ -62,7 +62,8 @@
     # is available in Dockstack.
     - name: Enable drupal/coder for phpcs
       shell: >
-        composer global require drupal/coder &&
+        composer global require squizlabs/php_codesniffer:^3.0.1 &&
+        composer global require drupal/coder:^8.3.1 &&
         phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
     # This has to be run during the run phase so the database URI is generated
     # from dropwhale.settings.
