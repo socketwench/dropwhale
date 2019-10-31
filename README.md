@@ -1,27 +1,10 @@
-# dropwhale
-A Drop-in Docker environment for Drupal module testing
+# dropwhale is obsolete
 
-## Purpose
+While this project remains up, it is no longer actively maintained. A more maintained approach would be to use another Docker-based local development environment such as:
 
-Dropwhale is a drop-in Docker environment aimed at Drupal module
-developers. Instead of maintaining a separate Drupal installation,
-Dropwhale does all the downloading and initialization of Drupal with a
-few easy commands. No need for you to download and install core. No
-need to argue with xdebug or get Drush installed. It's all built in!
-
-## Use
-
-1. Download Dropwhale and copy the following files to the root of your module repository:
-  * The .dropwhale/ directory
-  * docker-compose.yml
-  * dropwhale.settings.example
-2. You can choose to commit the directory to your module repository, or gitignore it. Dropwhale doesn't care.
-3. Rename dropwhale.settings.examples to dropwhale.settings.
-4. Edit dropwhale.settings, replace your_module_name with your module machine name.
-5. Make any other changes to dropwhale.settings, if desired.
-6. cd to the root of your module repository. Execute .dropwhale/start.sh
-
-If you need to rebuild from a clean version of Drupal, run .dropwhale/reset.sh
+* [TEN7's Flight Deck](https://github.com/ten7/flight-deck)
+* [Lando](https://docs.lando.dev/)
+* [DDev](https://www.ddev.com/)
 
 ## License
 
